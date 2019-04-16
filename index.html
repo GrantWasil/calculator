@@ -1,0 +1,78 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta rel="stylesheet" type="text/css" href="css/styles.ccs">
+        <title>Calculator | Grant Wasil</title>
+    </head>
+    <body>
+        <h1 class="pageTitle">Calculator</h1>
+        <div id="calculator">
+            <div id='frame'>
+                <div id='results'>
+                    1234
+                </div>
+                <div id="numbers">
+                    <div id='num-7'>
+                        7
+                    </div>
+                    <div id='num-8'>
+                        8
+                    </div>
+                    <div id='num-9'>
+                        9
+                    </div>
+                    <div id='num-4'>
+                        4
+                    </div>
+                    <div id='num-5'>
+                        5
+                    </div>
+                    <div id='num-6'>
+                        6
+                    </div>
+                    <div id='num-1'>
+                        1
+                    </div>
+                    <div id='num-2'>
+                        2
+                    </div>
+                    <div id='num-3'>
+                        3
+                    </div>
+                    <div id='num-0'>
+                        0
+                    </div>
+                    <div id='num-decimal'>
+                        .
+                    </div>
+                    <div id='num-equals'>
+                        =
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        
+
+        function add(a,b) {return a+b;}
+        function subtract(a,b) {return a-b;}
+        function multiply(a,b) {return a*b;}
+        function divide(a,b){return a/b;}
+
+        function operate(a,b,symbol){
+            if(symbol == plus) {
+                return add(a,b);
+            }
+            else if(symbol == minus) {
+                return subtract(a,b);
+            }
+            else if(symbol == times) {
+                return multiply(a,b);
+            }
+            else {
+                return divide(a,b);
+            }
+        }
+    </script>
+</html>
