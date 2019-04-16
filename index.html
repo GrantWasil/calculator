@@ -53,7 +53,7 @@
                     </div>
                     <div id="symbols">
                         <button onclick="backspace()" id='sym-back'>
-                            <=
+                            &#8592;
                         </button>
                         <button onclick="symbolPress('/')" id='sym-divide'>
                             /
@@ -73,12 +73,13 @@
         </div>
     </body>
     <script>
-        var displayValue = 0;
-        var heldA = 0;
-        var heldB = 0;
-        var heldSym = 0; 
-        var result = 0;
-        var running = [];
+        // Initialize Variables
+        var displayValue = ""; // The value that will be displayed at the top
+        var heldA = 0;  // The first number before a person hits an opperand
+        var heldB = 0; // The second number after an opperand hit
+        var heldSym = 0;  // An opperand that is selected
+        var result = 0; // The value that will be displayed after hitting equals
+        var running = []; // An array to hold multiple opperands and numbers
 
         function add(a,b) {return a+b;}
         function subtract(a,b) {return a-b;}
@@ -89,7 +90,8 @@
             // set a to be the first number in running
             a = running[0]
             a = parseFloat(a);
-    
+            
+            // For each number/opperand combo in the running array. Do maths
             for (var x = 1; x< running.length; x+=2){
                 var symbol = running[x];
                 b = running[x+1];
@@ -114,7 +116,10 @@
                     result = "ERROR"
                 }
             }
-            document.getElementById('results').innerHTML = a.toFixed(6);
+            document.getElementById('results').innerHTML = a.toFixed(3); // Updates results
+            // Reset all variables
+            a = a.toFixed(3);
+            a = parseFloat(a);
             displayValue = a;
             heldA = 0;
             heldB = 0;
@@ -130,14 +135,15 @@
         function symbolPress(y) {
             heldSym = y; 
             heldA = displayValue;
-            displayValue = 0;
+            displayValue = "";
             document.getElementById('results').innerHTML = heldSym;
             running.push(heldA, heldSym)
         }
 
         function backspace() {
-            displayValue = displayValue.slice(0, -1);
-            document.getElementById('results').innerHTML = displayValue;
+            displayValue += ""; // Converts displayValue to string so it can be sliced
+            displayValue = displayValue.slice(0, -1); // Removes the last value on displayValue
+            document.getElementById('results').innerHTML = displayValue; // Updates Results
         }
 
         function equalPress() {
