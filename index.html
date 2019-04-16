@@ -2,6 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet"> 
         <title>Calculator | Grant Wasil</title>
     </head>
     <body>
@@ -9,61 +10,61 @@
         <div id="calculator">
             <div id='frame'>
                 <div id='results'>
-                    1234
+                    0
                 </div>
                 <div id="button-pad">
                     <div id="numbers">
-                        <button id='num-7'>
-                          7
+                        <button onclick="buttonPress(7)" id='num-7'>
+                            7
                         </button>
-                        <button id='num-8'>
+                        <button onclick="buttonPress(8)" id='num-8'>
                             8
                         </button>
-                        <button id='num-9'>
+                        <button onclick="buttonPress(9)" id='num-9'>
                             9
                         </button>
-                        <button id='num-4'>
+                        <button onclick="buttonPress(4)" id='num-4'>
                             4
                         </button>
-                        <button id='num-5'>
+                        <button onclick="buttonPress(5)" id='num-5'>
                             5
                         </button>
-                        <button id='num-6'>
+                        <button onclick="buttonPress(6)" id='num-6'>
                             6
                         </button>
-                        <button id='num-1'>
+                        <button onclick="buttonPress(1)" id='num-1'>
                             1
                         </button>
-                        <button id='num-2'>
+                        <button onclick="buttonPress(2)" id='num-2'>
                             2
                         </button>
-                        <button id='num-3'>
+                        <button onclick="buttonPress(3)" id='num-3'>
                             3
                         </button>
-                        <button id='num-0'>
+                        <button onclick="buttonPress(0)" id='num-0'>
                             0
                         </button>
-                        <button id='num-decimal'>
+                        <button onclick="buttonPress('.')" id='num-decimal'>
                             .
                         </button>
-                        <button id='num-equals'>
+                        <button onclick="equalPress()" id='num-equals'>
                             =
                         </button>    
                     </div>
                     <div id="symbols">
-                        <button id='sym-back'>
+                        <button onclick="backspace()" id='sym-back'>
                             <=
                         </button>
-                        <button id='sym-divide'>
+                        <button onclick="symbolPress('/')" id='sym-divide'>
                             /
                         </button>
-                        <button id='sym-times'>
+                        <button onclick="symbolPress('X')" id='sym-times'>
                             X
                         </button>
-                        <button id='sym-minus'>
+                        <button onclick="symbolPress('-')" id='sym-minus'>
                             -
                         </button>
-                        <button id='sym-plus'>
+                        <button onclick="symbolPress('+')" id='sym-plus'>
                             +
                         </button>
                     </div>
@@ -72,26 +73,80 @@
         </div>
     </body>
     <script>
-        
+        var displayValue = 0;
+        var heldA = 0;
+        var heldB = 0;
+        var heldSym = 0; 
+        var result = 0;
+        var running = [];
 
         function add(a,b) {return a+b;}
         function subtract(a,b) {return a-b;}
         function multiply(a,b) {return a*b;}
         function divide(a,b){return a/b;}
 
-        function operate(a,b,symbol){
-            if(symbol == plus) {
-                return add(a,b);
+        function operate(running){
+            // set a to be the first number in running
+            a = running[0]
+            a = parseFloat(a);
+    
+            for (var x = 1; x< running.length; x+=2){
+                var symbol = running[x];
+                b = running[x+1];
+                b = parseFloat(b);
+                if(symbol == '+') {
+                    a = (add(a,b));
+                    console.log(a);
+                }
+                else if(symbol == '-') {
+                    a = (subtract(a,b));
+                    console.log(a);
+                }
+                else if(symbol == 'X') {
+                    a = (multiply(a,b));
+                    console.log(a);
+                }
+                else if(symbol == '/'){
+                    a = (divide(a,b));
+                    console.log(a);
+                }
+                else {
+                    result = "ERROR"
+                }
             }
-            else if(symbol == minus) {
-                return subtract(a,b);
-            }
-            else if(symbol == times) {
-                return multiply(a,b);
-            }
-            else {
-                return divide(a,b);
-            }
+            document.getElementById('results').innerHTML = a;
+            displayValue = 0;
+            heldA = 0;
+            heldB = 0;
+            heldSym = 0;
+            running.length = 0;
+        }
+
+        function buttonPress(x) {
+            displayValue += "" + x; 
+            document.getElementById('results').innerHTML = displayValue;
+        }
+
+        function symbolPress(y) {
+            heldSym = y; 
+            heldA = displayValue;
+            displayValue = 0;
+            document.getElementById('results').innerHTML = heldSym;
+            running.push(heldA, heldSym)
+        }
+
+        function backspace() {
+            displayValue = displayValue.slice(0, -1);
+            document.getElementById('results').innerHTML = displayValue;
+        }
+
+        function equalPress() {
+            heldB = displayValue;
+            running.push(heldB);
+            console.log(running);
+            heldA = parseFloat(heldA);
+            heldB = parseFloat(heldB);
+            operate(running);
         }
     </script>
 </html>
